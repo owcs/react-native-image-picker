@@ -271,12 +271,14 @@ public class ImagePickerModule extends ReactContextBaseJavaModule {
 
     if (pickVideo) {
       requestCode = REQUEST_LAUNCH_VIDEO_LIBRARY;
-      libraryIntent = new Intent(Intent.ACTION_PICK);
+      libraryIntent = new Intent(Intent.ACTION_GET_CONTENT);
       libraryIntent.setType("video/*");
+      intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
     } else {
       requestCode = REQUEST_LAUNCH_IMAGE_LIBRARY;
-      libraryIntent = new Intent(Intent.ACTION_PICK,
-      MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+      libraryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+      libraryIntent.setType("image/*");
+      intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
     }
 
     if (libraryIntent.resolveActivity(mReactContext.getPackageManager()) == null) {
