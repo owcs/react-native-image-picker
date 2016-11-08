@@ -478,10 +478,15 @@ RCT_EXPORT_METHOD(showImagePicker:(NSDictionary *)options callback:(RCTResponseS
           if ([[storageOptions objectForKey:@"skipBackup"] boolValue]) {
             [self addSkipBackupAttributeToItemAtPath:path]; // Don't back up the file to iCloud
           }
-
-          if (![[storageOptions objectForKey:@"waitUntilSaved"] boolValue]) {
+            
+          // Only respect wait until saved if source is camera
+          if (self.picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+            if (![[storageOptions objectForKey:@"waitUntilSaved"] boolValue]) {
+              self.callback(@[self.response]);
+            }
+          } else {
             self.callback(@[self.response]);
-          }
+          }    
         }
         else {
             self.callback(@[self.response]);
