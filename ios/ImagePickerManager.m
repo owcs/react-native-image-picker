@@ -464,6 +464,9 @@ RCT_EXPORT_METHOD(showImagePicker:(NSDictionary *)options callback:(RCTResponseS
                     } else {
                         NSLog(@"Save video succeed.");
                         if ([[storageOptions objectForKey:@"waitUntilSaved"] boolValue]) {
+                            // Set original URL to to video saved in camera roll
+                            [self.response setObject:assetURL.absoluteString forKey:@"origURL"];
+
                             self.callback(@[self.response]);
                         }
                     }
